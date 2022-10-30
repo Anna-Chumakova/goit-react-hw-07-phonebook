@@ -13,9 +13,7 @@ export const isDublicate = ({name, phone}, contacts) => {
     
     return Boolean(result);
 }
-export const message = (data) => {
-    return Notiflix.Notify.info(`${data.name} - ${data.phone} is already exist`); 
-}
+
 export const fetchContacts = createAsyncThunk(
     "contacts/fetch",
     async(_, thunkApi) => {
@@ -27,10 +25,12 @@ export const fetchContacts = createAsyncThunk(
         }
     }
 );
-    
+ 
+
 export const addContact = createAsyncThunk(
     "contacts/add",
-    async(data, {rejectWithValue}) => {
+    async (data, { rejectWithValue }) => {
+ 
         try {
             const result = await fetch.addContact(data);
             return result;
@@ -42,8 +42,8 @@ export const addContact = createAsyncThunk(
         condition: (data, { getState }) => {
             const { contacts } = getState();
             if (isDublicate(data, contacts.items)) {
-            
-                return  message(data);
+            const massege = Notiflix.Notify.info(`${data.name} - ${data.phone} is already exist`);
+                return massege(data);
             }
         }
     },
